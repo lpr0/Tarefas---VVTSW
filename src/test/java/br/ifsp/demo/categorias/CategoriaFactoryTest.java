@@ -1,0 +1,60 @@
+package br.ifsp.demo.categorias;
+
+import br.ifsp.demo.tarefas.categorias.Categoria;
+import br.ifsp.demo.tarefas.categorias.CategoriaDAO;
+import br.ifsp.demo.tarefas.categorias.CategoriaFactory;
+import br.ifsp.demo.tarefas.categorias.CategoriaRepository;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class CategoriaFactoryTest {
+
+    @ParameterizedTest
+    @Tag("UnitTest")
+    @Tag("TDD")
+    @CsvSource({
+            "0", "1", "2"
+    })
+    public void deveRetornarAInstanciaDaCategoria(Integer id) {
+        CategoriaRepository rep = mock();
+        when(rep.findById(id)).thenReturn(Optional.of(
+                new CategoriaDAO(id, "teste" + id.toString(), "Testando " + id.toString())));
+
+        assertThat(CategoriaFactory.getCategoria(id, rep))
+                .isNotNull()
+                .isInstanceOf(Categoria.class);
+    }
+
+    /*
+    @ParameterizedTest
+    @Tag("UnitTest")
+    @Tag("TDD")
+    @CsvSource({
+            "0, 2", "1, 1", "2, 3"
+    })
+    public void deveRetornarSempreAMesmaInstanciaDaCadaCategoria(Integer id, int repet) {
+
+        Map<Integer, Categoria> categorias = new HashMap<>();
+        for (Integer I = 0; I < 3; I++ ) {
+            categorias.put(I, new Categoria(I, "teste" + I.toString(), "Testando " + I.toString()));
+        }
+
+
+
+        for (int I = 0; I < repet; I++) {
+            assertThat(CategoriaFactory.getCategoria(id, rep)).
+        }
+    }
+    */
+}
