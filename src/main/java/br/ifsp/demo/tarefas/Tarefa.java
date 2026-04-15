@@ -2,16 +2,19 @@ package br.ifsp.demo.tarefas;
 
 import br.ifsp.demo.tarefas.categorias.Categoria;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
+@Getter
 public class Tarefa {
-    private UUID id;
+    private final UUID id;
     private String titulo;
     private String descricao;
-    private LocalDate dataInsercao;
+    private final LocalDate dataInsercao;
     private LocalDate dataLimite;
     private Categoria categoria;
 
