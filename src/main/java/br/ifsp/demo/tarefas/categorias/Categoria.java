@@ -19,4 +19,10 @@ public class Categoria {
         this.nome = nome;
         this.descricao = descricao;
     }
+
+    public Categoria(CategoriaDTO dto) {
+        this.id = dto.id();
+        this.nome = dto.nome();
+        this.descricao = dto.descricao();
+    }
 }

@@ -3,7 +3,6 @@ package br.ifsp.demo.tarefas.categorias;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -19,5 +18,9 @@ public class CategoriaDAO {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+    }
+
+    public CategoriaDTO toDTO() {
+        return new CategoriaDTO(this.id, this.nome, this.descricao);
     }
 }
