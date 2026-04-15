@@ -36,7 +36,7 @@ public class CategoriaFactoryTest {
                 .isInstanceOf(Categoria.class);
     }
 
-    /*
+
     @ParameterizedTest
     @Tag("UnitTest")
     @Tag("TDD")
@@ -45,16 +45,15 @@ public class CategoriaFactoryTest {
     })
     public void deveRetornarSempreAMesmaInstanciaDaCadaCategoria(Integer id, int repet) {
 
-        Map<Integer, Categoria> categorias = new HashMap<>();
-        for (Integer I = 0; I < 3; I++ ) {
-            categorias.put(I, new Categoria(I, "teste" + I.toString(), "Testando " + I.toString()));
-        }
+        CategoriaRepository rep = mock();
+        when(rep.findById(id)).thenReturn(Optional.of(
+                new CategoriaDAO(id, "teste" + id.toString(), "Testando " + id.toString())));
 
-
+        Categoria categoria = CategoriaFactory.getCategoria(id, rep);
 
         for (int I = 0; I < repet; I++) {
-            assertThat(CategoriaFactory.getCategoria(id, rep)).
+            assertThat(CategoriaFactory.getCategoria(id, rep)).isSameAs(categoria);
         }
     }
-    */
+
 }
