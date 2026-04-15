@@ -1,10 +1,12 @@
 package br.ifsp.demo.tarefas;
 
 import br.ifsp.demo.tarefas.categorias.Categoria;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@AllArgsConstructor
 public class Tarefa {
     private UUID id;
     private String titulo;
@@ -15,4 +17,19 @@ public class Tarefa {
 
     private Estado estado;
 
+    public Tarefa(String titulo, String descricao, Categoria categoria, LocalDate dataLimite) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.dataInsercao = LocalDate.now();
+        this.dataLimite = dataLimite;
+        this.estado = Estado.PENDENTE;
+        this.id = UUID.randomUUID();
+    }
+
+    public TarefaDTO toDTO() {
+        return new TarefaDTO(
+                this.id, this.titulo, this.descricao, this.dataInsercao, this.dataLimite, this.categoria.getId(), this.estado
+        );
+    }
 }

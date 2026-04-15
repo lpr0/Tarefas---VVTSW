@@ -2,23 +2,20 @@ package br.ifsp.demo.categorias;
 
 import br.ifsp.demo.tarefas.categorias.Categoria;
 import br.ifsp.demo.tarefas.categorias.CategoriaDAO;
-import br.ifsp.demo.tarefas.categorias.CategoriaFactory;
+import br.ifsp.demo.tarefas.categorias.Categorias;
 import br.ifsp.demo.tarefas.categorias.CategoriaRepository;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class CategoriaFactoryTest {
+public class CategoriasTest {
 
     @ParameterizedTest
     @Tag("UnitTest")
@@ -31,7 +28,9 @@ public class CategoriaFactoryTest {
         when(rep.findById(id)).thenReturn(Optional.of(
                 new CategoriaDAO(id, "teste" + id.toString(), "Testando " + id.toString())));
 
-        assertThat(CategoriaFactory.getCategoria(id, rep))
+        Categorias cats = new Categorias(rep);
+
+        assertThat(cats.getCategoria(id))
                 .isNotNull()
                 .isInstanceOf(Categoria.class);
     }
@@ -49,10 +48,12 @@ public class CategoriaFactoryTest {
         when(rep.findById(id)).thenReturn(Optional.of(
                 new CategoriaDAO(id, "teste" + id.toString(), "Testando " + id.toString())));
 
-        Categoria categoria = CategoriaFactory.getCategoria(id, rep);
+        Categorias cats = new Categorias(rep);
+
+        Categoria categoria = cats.getCategoria(id);
 
         for (int I = 0; I < repet; I++) {
-            assertThat(CategoriaFactory.getCategoria(id, rep)).isSameAs(categoria);
+            assertThat(cats.getCategoria(id)).isSameAs(categoria);
         }
     }
 
