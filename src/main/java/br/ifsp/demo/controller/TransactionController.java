@@ -1,7 +1,7 @@
 package br.ifsp.demo.controller;
 
 import br.ifsp.demo.security.auth.AuthenticationInfoService;
-import br.ifsp.demo.tarefas.HIDTO;
+import br.ifsp.demo.tarefas.categorias.CategoriaRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import java.util.UUID;
 public class TransactionController {
 
     private final AuthenticationInfoService authService;
+    private final CategoriaRepository categoriaRepository;
 
     @GetMapping
     public ResponseEntity<String> HI() {
