@@ -21,6 +21,10 @@ public class Tarefa {
     private Estado estado;
 
     public Tarefa(String titulo, String descricao, Categoria categoria, LocalDate dataLimite) {
+        if (titulo == null || descricao == null || dataLimite == null || categoria == null) throw new IllegalArgumentException();
+        if (titulo.isBlank() || descricao.isBlank()) throw new IllegalArgumentException();
+        if (dataLimite.isBefore(LocalDate.now())) throw new IllegalArgumentException();
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.categoria = categoria;

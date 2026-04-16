@@ -4,6 +4,8 @@ import br.ifsp.demo.security.auth.AuthenticationInfoService;
 import br.ifsp.demo.tarefas.Estado;
 import br.ifsp.demo.tarefas.TarefaDAO;
 import br.ifsp.demo.tarefas.TarefaRepository;
+import br.ifsp.demo.tarefas.categorias.CategoriaDAO;
+import br.ifsp.demo.tarefas.categorias.CategoriaRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
@@ -78,6 +81,21 @@ public class TransactionControllerTest {
 
     @Nested
     class CriarTarefa {
-            
+        @Test
+        @Tag("UnitTest")
+        @Tag("Functional")
+        public void seDataLimiteForAnteriorDataAtualDeveNegarCriarTarefa() {
+            CategoriaRepository rep = mock();
+            when(rep.findById(0)).thenReturn(Optional.of(new CategoriaDAO(0, "zero", "zerando")));
+
+            TransactionController sut = new TransactionController(
+                    null, rep, null);
+
+            CriarTarefaDTO dto = new CriarTarefaDTO(
+                    "teste", "testando", LocalDate.now().minusDays(1), 0
+            );
+
+            assertThatIllegalArgumentException().isThrownBy(() -> sut.criarTarefa(dto));
+        }
     }
 }
